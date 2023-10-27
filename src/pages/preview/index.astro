@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Preview route</title>
+    <script async defer src="https://static.cdn.prismic.io/prismic.js?new=true&repo=testing-sksksksksksksk"></script>
+    <script type="module">
+      import { createClient } from "https://cdn.skypack.dev/@prismicio/client";
+
+      const init = async () => {
+        const defaultURL = "/";
+
+        const url = await createClient("testing-sksksksksksksk",)
+            .resolvePreviewURL({
+          linkResolver: (doc) => {
+            if (doc.isBroken) {
+              return "/404";
+            } else if (doc.type === "essay") {
+              return `/preview/essay/${doc.id}`;
+            }
+            // add more pages (a.k.a redirects) ...
+            return defaultURL;
+          },
+          defaultURL: defaultURL,
+        });
+
+        window.location.replace(url);
+      };
+      init();
+    </script>
+  </head>
+  <body>
+    <h1>Loading Preview...</h1>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+---
+import * as prismic from "@prismicio/client";
+import Layout from "../../../components/Layout.astro";
+import { prismicClient } from "../../../prismic"
+
+const previewCookie = Astro.cookies.get("io.prismic.preview").value;
+
+if (!previewCookie) {
+  return Astro.redirect("/404");
+}
+
+// https://docs.astro.build/en/core-concepts/routing/#modifying-the-slug-example-for-ssr
+const { slug } = Astro.params
+const posts = await prismicClient.getAllByType('essay', {ref: previewCookie})
+
+const page = posts.find((post) => post.id === slug);
+if (!page) return Astro.redirect("/404");
+
+---
+
+<Layout>
+    <Fragment set:html={prismic.asHTML(page.data.title)} />
+    
+    <img src={prismic.asImageSrc(page.data.cover)} />
+    
+    <Fragment set:html={prismic.asHTML(page.data.body)} />
+</Layout>

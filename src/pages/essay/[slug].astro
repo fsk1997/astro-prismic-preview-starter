@@ -1,0 +1,25 @@
+---
+export const prerender = true;
+
+import * as prismic from "@prismicio/client";
+import { getAllEssays } from "../../prismic";
+import Layout from "../../components/Layout.astro";
+
+export async function getStaticPaths() {
+    const essays = await getAllEssays();
+    return essays.map((essay) => ({
+        params: { slug: essay.uid },
+        props: essay,
+    }));
+}
+
+const essay = Astro.props;
+---
+
+<Layout>
+    <Fragment set:html={prismic.asHTML(essay.data.title)} />
+    
+    <img src={prismic.asImageSrc(essay.data.cover)} />
+    
+    <Fragment set:html={prismic.asHTML(essay.data.body)} />
+</Layout>

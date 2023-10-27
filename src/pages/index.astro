@@ -1,0 +1,22 @@
+---
+export const prerender = true;
+
+import Layout from "../components/Layout.astro";
+import { getAllEssays } from "../prismic";
+import * as prismic from '@prismicio/client'
+
+const essays = await getAllEssays();
+// console.log('boom')
+---
+
+<Layout>
+	<h1>Homepage</h1>
+
+	<p>List of articles</p>
+	<ul>
+		{essays.map((essay)=>{return(
+			<li><a href={`/essay/${essay.uid}`}><Fragment set:html={prismic.asText(essay.data.title)}/></a></li>
+		)})}
+	</ul>
+</Layout>
+
