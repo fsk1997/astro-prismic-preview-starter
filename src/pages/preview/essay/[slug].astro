@@ -16,12 +16,21 @@ const posts = await prismicClient.getAllByType('essay', {ref: previewCookie})
 const page = posts.find((post) => post.id === slug);
 if (!page) return Astro.redirect("/404");
 
+console.log(page.data.body1[0])
 ---
 
 <Layout>
     <Fragment set:html={prismic.asHTML(page.data.title)} />
-    
+      
     <img src={prismic.asImageSrc(page.data.cover)} />
     
-    <Fragment set:html={prismic.asHTML(page.data.body)} />
+    {page.data.body1.map((slices)=>{
+        if (slices.slice_type === "grid_row") {
+            return (
+                <p>Grid Row Type</p>
+            )
+        } else (
+            <p>Not a type</p>
+        )
+    })}
 </Layout>

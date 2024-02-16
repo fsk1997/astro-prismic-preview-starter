@@ -14,6 +14,8 @@ export async function getStaticPaths() {
 }
 
 const essay = Astro.props;
+
+console.log(essay.data.body1[0])
 ---
 
 <Layout>
@@ -21,5 +23,15 @@ const essay = Astro.props;
     
     <img src={prismic.asImageSrc(essay.data.cover)} />
     
-    <Fragment set:html={prismic.asHTML(essay.data.body)} />
+    {essay.data.body1.map((slices)=>{
+        if (slices.slice_type === "grid_row") {
+            return (
+                <p>Grid Row Type</p>
+            )
+        } else (
+            <p>Not a type</p>
+        )
+    })}
+    <!-- <Fragment set:html={prismic.asHTML(essay.data.body1)} /> -->
+    <!-- <Fragment set:html={prismic.asHTML(essay.data.body1)} /> -->
 </Layout>
