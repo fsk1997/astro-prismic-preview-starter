@@ -43,3 +43,6 @@ export function getAllEssays() {
     // console.log('boom')
     return results
 }
+export async function getPage(uid) {
+    return prismicClient.getByUID('page', uid, { pageSize: 1, page: 1 });
+}

@@ -1,0 +1,37 @@
+---
+
+import Layout from "../../../components/Layout.astro";
+import { prismicClient, getPage, getAllEssays } from "../../../prismic";
+import * as prismic from '@prismicio/client'
+
+const previewCookie = Astro.cookies.get("io.prismic.preview")?.value;
+
+if (!previewCookie) {
+  return Astro.redirect("/404");
+}
+
+// const page = await prismicClient.getByUID('page', 'home', { pageSize: 1, page: 1, ref: previewCookie })
+
+// https://docs.astro.build/en/core-concepts/routing/#modifying-the-slug-example-for-ssr
+const { slug } = Astro.params
+const page = await prismicClient.getByUID('page', 'home', {ref: previewCookie})
+
+if (!page) return Astro.redirect("/404");
+
+const essays = await getAllEssays();
+const doc = page;
+
+console.log("preview:", doc)
+---
+
+<Layout>
+	<h1>{doc.data.title[0].text} - Static Preview of Home</h1>
+
+	<p>List of articles</p>
+	<ul>
+		{essays.map((essay)=>{return(
+			<li><a href={`/essay/${essay.uid}`}><Fragment set:html={prismic.asText(essay.data.title)}/></a></li>
+		)})}
+	</ul>
+</Layout>
+

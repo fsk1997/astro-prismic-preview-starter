@@ -2,15 +2,16 @@
 export const prerender = true;
 
 import Layout from "../components/Layout.astro";
-import { getAllEssays } from "../prismic";
+import { prismicClient, getPage, getAllEssays } from "../prismic";
 import * as prismic from '@prismicio/client'
 
 const essays = await getAllEssays();
-// console.log('boom')
+const doc = await getPage("home")
+console.log("build:", doc)
 ---
 
 <Layout>
-	<h1>Homepage</h1>
+	<h1>{doc.data.title[0].text} - Build</h1>
 
 	<p>List of articles</p>
 	<ul>

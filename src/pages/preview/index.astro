@@ -16,6 +16,10 @@
               return "/404";
             } else if (doc.type === "essay") {
               return `/preview/essay/${doc.id}`;
+            } else if (doc.id === "ZdA6gxAAAMM_4GXT") {
+              return `/preview/page/home`;
+            } else if (doc.type === "page") {
+              return `/preview/page/${doc.id}`;
             }
             // add more pages (a.k.a redirects) ...
             return defaultURL;
