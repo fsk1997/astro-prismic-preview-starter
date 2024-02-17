@@ -10,9 +10,9 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^3.4.0",
-    "@astrojs/netlify": "^3.0.2",
+    "@astrojs/netlify": "^3.1.1",
     "@astrojs/node": "^6.0.3",
-    "@prismicio/client": "^7.3.1"
+    "@prismicio/client": "^7.3.1",
+    "astro": "^3.4.0"
   }
 }
