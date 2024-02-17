@@ -12,8 +12,7 @@ if (!previewCookie) {
 
 // const page = await prismicClient.getByUID('page', 'home', { pageSize: 1, page: 1, ref: previewCookie })
 
-// https://docs.astro.build/en/core-concepts/routing/#modifying-the-slug-example-for-ssr
-const { slug } = Astro.params
+// https://docs.astro.build/en/guides/routing/#server-ssr-mode
 const page = await prismicClient.getByUID('page', 'home', {ref: previewCookie})
 
 if (!page) return Astro.redirect("/404");
